@@ -8,24 +8,24 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-.DS_Store
 dist
+html
 dist-ssr
-coverage
 *.local
+stats.html
 
-/cypress/videos/
-/cypress/screenshots/
 
-# Editor directories and files
+# Editor directories and files# Visual Studio 2015/2017 cache/options directory
+.vs/
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
+.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-/.vs/Blog-UI/v17
-/.vs/Blog-UI/FileContentIndex
-/.vs
+/.vs/*
+node_modules

@@ -1,53 +1,32 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <div class="header">
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/register">用户注册</RouterLink>
-      <RouterLink to="/article/all">博客首页</RouterLink>
-    </nav>
-  </div>
-  <div class="content">
-    <RouterView />
-  </div>
+	<el-config-provider :locale="i18nLocale" :button="config" :size="assemblySize">
+		<router-view></router-view>
+	</el-config-provider>
 </template>
 
-<style scoped>
-.header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup lang="ts">
+import { reactive, computed } from "vue"
+import { GlobalStore } from "@/stores"
+import { useTheme } from "@/hooks/useTheme"
+import { getBrowserLang } from "@/utils/util"
+import { ElConfigProvider } from "element-plus"
+import zhCn from "element-plus/es/locale/lang/zh-cn"
+import en from "element-plus/es/locale/lang/en"
 
-.content {
-  margin-top: 1rem;
-  width: 100%;
-  min-height: 90vh;
-}
+const globalStore = GlobalStore()
+const { initTheme } = useTheme()
+initTheme()
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 1rem;
-}
+// element config
+const config = reactive({ autoInsertSpace: false })
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
+// element language
+const i18nLocale = computed(() => {
+	if (globalStore.language == "zh") return zhCn
+	if (globalStore.language == "en") return en
+	return getBrowserLang() == "zh" ? zhCn : en
+})
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-</style>
+// element assemblySize
+const assemblySize = computed(() => globalStore.assemblySize)
+</script>
